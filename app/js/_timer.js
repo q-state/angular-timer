@@ -233,6 +233,15 @@ var timerModule = angular.module('timer', [])
 
         }
 
+				function setProgressBar() {
+					//calculate progress bar
+					$scope.progressBar = progressBarService.calculateProgressBar($scope.startTime, $scope.millis, $scope.endTime, $scope.countdownattr);
+
+					if($scope.progressBar === 100) {
+						$scope.displayProgressActive = ''; //No more Bootstrap active effect
+					}
+				}
+
         //determine initial values of time units and add AddSeconds functionality
         if ($scope.countdownattr) {
           $scope.millis = $scope.countdownattr * 1000;
@@ -258,6 +267,7 @@ var timerModule = angular.module('timer', [])
 
             $scope.countdown = countdownSeconds;
             $scope.millis = countdownSeconds * 1000;
+            setProgressBar();
             calculateTimeUnits();
           });
         } else {
@@ -311,12 +321,7 @@ var timerModule = angular.module('timer', [])
           }
 
           if(typeTimer !== null){
-            //calculate progress bar
-            $scope.progressBar = progressBarService.calculateProgressBar($scope.startTime, $scope.millis, $scope.endTime, $scope.countdownattr);
-
-            if($scope.progressBar === 100){
-              $scope.displayProgressActive = ''; //No more Bootstrap active effect
-            }
+            setProgressBar();
           }
         };
 
